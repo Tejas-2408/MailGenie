@@ -61,6 +61,11 @@ In addition to the web platform, MailGenie includes a **Chrome Extension** (foun
 4. Select the `mail-genie-extension` folder from this repository.
 5. The MailGenie icon will now appear in your browser, ready to assist you on any webpage.
 
+> [!IMPORTANT]
+> **Configuration Note:** To avoid CORS issues when the extension calls the backend, you must update the `CorsConfig.java` file in the Spring Boot project. 
+> 1. Find your **Extension ID** on the `chrome://extensions/` page (a long string of random characters).
+> 2. Add `chrome-extension://YOUR_EXTENSION_ID` to the `allowedOrigins` list in `CorsConfig.java`.
+> 3. Re-build and deploy your backend to apply the changes.
 ---
 
 ## 🔧 Installation & Local Setup
