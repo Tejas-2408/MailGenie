@@ -13,7 +13,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 "http://localhost:3000",
                 "http://localhost:5173",
                 "https://mailgenie-ikfh.onrender.com",
-                 "chrome-extension://hdfanojdcpocgiabengkaohbpmaddjfb"
+                 "chrome-extension://ohckjajdlljafimnfhpeijnohkgooopg"
             )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*")
