@@ -10,11 +10,14 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Get API URL from environment variable or use default for development
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+
   const handleSubmit = async () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.post("http://localhost:8080/api/email/generate", {
+      const response = await axios.post(`${API_BASE_URL}/api/email/generate`, {
        emailContent,
        tone 
       });
@@ -84,13 +87,13 @@ function App() {
             variant='outlined'
             value={generatedReply || ''}
             inputProps={{ readOnly: true }}/>
-        
-        <Button
-          variant='outlined'
-          sx={{ mt: 2 }}
-          onClick={() => navigator.clipboard.writeText(generatedReply)}>
-            Copy to Clipboard
-        </Button>
+         
+         <Button
+           variant='outlined'
+           sx={{ mt: 2 }}
+           onClick={() => navigator.clipboard.writeText(generatedReply)}>
+             Copy to Clipboard
+         </Button>
        </Box> 
       )}
     </Container>
