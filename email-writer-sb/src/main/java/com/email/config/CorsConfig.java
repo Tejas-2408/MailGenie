@@ -12,7 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
             .allowedOrigins(
                 "http://localhost:3000",
                 "http://localhost:5173",
-                "https://mailgenie-frontend.onrender.com"
+                "https://mailgenie-ikfh.onrender.com/"
             )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*")
