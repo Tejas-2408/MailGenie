@@ -1,34 +1,17 @@
-# Stage 1: Build
-FROM maven:3.9-eclipse-temurin-17 AS builder
-
+# Stage 1: Build the application using Maven
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-
-# Copy pom.xml
-COPY pom.xml .
-
-# Download dependencies
-RUN mvn dependency:go-offline
-
-# Copy source code
-COPY src ./src
-
-# Build the application
+COPY . .
 RUN mvn clean package -DskipTests
 
-# Stage 2: Runtime
-FROM eclipse-temurin:17-jre-slim
-
+# Stage 2: Runtime environment
+# Use '17-jre-jammy' (Ubuntu-based) or '17-jre' (standard)
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 
-# Copy the built jar from builder stage
-COPY --from=builder /app/target/*.jar app.jar
-
-# Expose port (Render expects PORT environment variable)
+# Render provides a port dynamically via the PORT environment variable
+ENV PORT=8080
 EXPOSE 8080
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-    CMD java -cp app.jar org.springframework.boot.loader.JarLauncher || exit 1
-
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx300m", "-jar", "app.jar"]
